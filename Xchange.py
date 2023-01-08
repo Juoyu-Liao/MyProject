@@ -33,22 +33,22 @@ st.markdown("# Welcome to Xchange")
 # show dataframe
 st.markdown("## Game Result")
 col1, col2 = st.columns(2)
-col1.metric(label = "Red team score at round number " + str(len(df_red)), value = df_red['score'].loc[len(df_red)], delta = str(df_red['score'].loc[len(df_red)] - df_red['score'].loc[len(df_red)-1]) )
-col2.metric(label = "Blue team score at round number " + str(len(df_blue)), value = df_blue['score'].loc[len(df_blue)], delta = str(df_blue['score'].loc[len(df_blue)] - df_blue['score'].loc[len(df_blue)-1]) )
+col1.metric(label = "Blue team score at round number " + str(len(df_blue)), value = df_blue['score'].loc[len(df_blue)], delta = str(df_blue['score'].loc[len(df_blue)] - df_blue['score'].loc[len(df_blue)-1]) )
+col2.metric(label = "Red team score at round number " + str(len(df_red)), value = df_red['score'].loc[len(df_red)], delta = str(df_red['score'].loc[len(df_red)] - df_red['score'].loc[len(df_red)-1]) )
 
 col1, col2 = st.columns(2)
-col1.metric(label = "Red team health at round number " + str(len(df_red)), value = df_red['healthAfter'].loc[len(df_red)], delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1]))
-col2.metric(label = "Blue team health at round number " + str(len(df_blue)), value = df_blue['healthAfter'].loc[len(df_blue)], delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1]))
+col1.metric(label = "Blue team health at round number " + str(len(df_blue)), value = df_blue['healthAfter'].loc[len(df_blue)], delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1]))
+col2.metric(label = "Red team health at round number " + str(len(df_red)), value = df_red['healthAfter'].loc[len(df_red)], delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1]))
 
 col1, col2 = st.columns(2)
-col1.markdown("- Red team:")
-col2.markdown("- Blue team:")
+col1.markdown("- Blue team:")
+col2.markdown("- Red team:")
 col1, col2 = st.columns(2)
-col1.table(df_red)
-col2.table(df_blue)
+col1.table(df_blue)
+col2.table(df_red)
 
 #show bar chart
-st.markdown("## Team red and Team blue")
+st.markdown("## Team blue and Team red")
 
 import altair as alt
 c = alt.Chart(df).mark_bar().encode(
