@@ -22,10 +22,10 @@ df.rename(columns = {"teams.name": "teams"}, inplace= True)
 # df.set_index('roundNumber', inplace = True)
 df_red = df.loc[df['teams'] == 'red']
 df_red.set_index(['roundNumber'], inplace = True)
-df_red.drop(columns = ['healthBefore', 'healthAfter', 'teams'], inplace = True)
+df_red.drop(columns = ['healthBefore', 'teams'], inplace = True)
 df_blue = df.loc[df['teams'] == 'blue']
 df_blue.set_index(['roundNumber'], inplace = True)
-df_blue.drop(columns = ['healthBefore', 'healthAfter', 'teams'], inplace = True)
+df_blue.drop(columns = ['healthBefore', 'teams'], inplace = True)
 
 #streamlit
 st.markdown("# Welcome to Xchange")
@@ -35,6 +35,10 @@ st.markdown("## Game Result")
 col1, col2 = st.columns(2)
 col1.metric(label = "Red team score at round number " + str(len(df_red)), value = df_red['score'].loc[len(df_red)], delta = str(df_red['score'].loc[len(df_red)] - df_red['score'].loc[len(df_red)-1]) )
 col2.metric(label = "Blue team score at round number " + str(len(df_blue)), value = df_blue['score'].loc[len(df_blue)], delta = str(df_blue['score'].loc[len(df_blue)] - df_blue['score'].loc[len(df_blue)-1]) )
+
+col1, col2 = st.columns(2)
+col1.metric(label = "Red team health at round number " + str(len(df_red)), value = ['healthAfter'].loc[len(df_red)], delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1]))
+col2.metric(label = "Blue team health at round number " + str(len(df_blue)), value = ['healthAfter'].loc[len(df_blue)], delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1]))
 
 col1, col2 = st.columns(2)
 col1.markdown("- Red team:")
@@ -55,15 +59,22 @@ c = alt.Chart(df).mark_bar().encode(
 )
 st.altair_chart(c)
 
-
-#df.set_index('teams.name', inplace = True)
-c = alt.Chart(df).mark_bar().encode(
+col1, col2 = st.columns(2)
+c1 = alt.Chart(df).mark_bar().encode(
     x='roundNumber:O',
     y='score:Q',
     color = 'teams:N',
     column = 'teams:N'
 )
-st.altair_chart(c)
+c2 = alt.Chart(df).mark_bar().encode(
+    x='roundNumber:O',
+    y='healthAfter:Q',
+    color = 'teams:N',
+    column = 'teams:N'
+)
+
+col1.altair_chart(c1)
+col2.altair_chart(c2)
 
 c = alt.Chart(df).mark_bar().encode(
     x='teams:N',
