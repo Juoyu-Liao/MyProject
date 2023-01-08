@@ -37,8 +37,8 @@ col1.metric(label = "Red team score at round number " + str(len(df_red)), value 
 col2.metric(label = "Blue team score at round number " + str(len(df_blue)), value = df_blue['score'].loc[len(df_blue)], delta = str(df_blue['score'].loc[len(df_blue)] - df_blue['score'].loc[len(df_blue)-1]) )
 
 col1, col2 = st.columns(2)
-col1.metric(label = "Red team health at round number " + str(len(df_red)), value = ['healthAfter'].loc[len(df_red)], delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1]))
-col2.metric(label = "Blue team health at round number " + str(len(df_blue)), value = ['healthAfter'].loc[len(df_blue)], delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1]))
+col1.metric(label = "Red team health at round number " + str(len(df_red)), value = df_red['healthAfter'].loc[len(df_red)], delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1]))
+col2.metric(label = "Blue team health at round number " + str(len(df_blue)), value = df_blue['healthAfter'].loc[len(df_blue)], delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1]))
 
 col1, col2 = st.columns(2)
 col1.markdown("- Red team:")
