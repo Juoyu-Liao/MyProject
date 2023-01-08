@@ -4,7 +4,7 @@ import pandas as pd
 import json
 
 
-game_token = 'd59ffb35-5be9-45db-b064-1d0248736f77'  #game token needed to be chagned 
+game_token = 'c58aa4f6-ce05-4bcb-8837-fd977d2a4930'  #game token needed to be chagned 
 
 url = 'https://game-server.geoguessr.com/api/duels/' + game_token
 cookies = {
