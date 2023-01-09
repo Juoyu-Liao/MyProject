@@ -1,15 +1,15 @@
 import streamlit as st
 import requests
-import pandas as pd
 import json
+import pandas as pd
+import altair as alt
 
-#streamlit
-st.markdown("# Welcome to Xchange")
+st.markdown("# Welcome to Xchange 2023")
+st.markdown("### Insight and Data in Stavanger")
 
+
+### insert game token and get data
 game_token = st.text_input('Game token', 'c58aa4f6-ce05-4bcb-8837-fd977d2a4930')
-
-# game_token = '3f325168-e2b8-4957-9533-5297fa7b999f'  #game token needed to be chagned 
-
 url = 'https://game-server.geoguessr.com/api/duels/' + game_token
 cookies = {
     '_ncfa': "hpGcgybEYZQHthKKNcJau5%2BgG6TcHIqFB5NKojkbOZE%3DpunDNm4VNbjKoylctHMUwN9xgEz41gZheIssGn2A89M%2F%2FI7ZSf27qL8hO07TCyks",
@@ -18,12 +18,11 @@ cookies = {
 r = requests.get(url, cookies=cookies) 
 data = json.loads(r.text)
 
-# Normalizing data
+### Normalizing data
 df = pd.json_normalize(data, record_path =['teams','roundResults'], meta = [['teams','name']])
 df.drop(columns = ['bestGuess.roundNumber', 'bestGuess.lat', 'bestGuess.lng', 'bestGuess.distance', 'bestGuess.created', 'bestGuess.isTeamsBestGuessOnRound'], inplace = True)
 df.rename(columns = {"teams.name": "teams"}, inplace= True)
-
-# df.set_index('roundNumber', inplace = True)
+### split dataframe into 2 teams
 df_red = df.loc[df['teams'] == 'red']
 df_red.set_index(['roundNumber'], inplace = True)
 df_red.drop(columns = ['healthBefore', 'teams'], inplace = True)
@@ -32,56 +31,73 @@ df_blue.set_index(['roundNumber'], inplace = True)
 df_blue.drop(columns = ['healthBefore', 'teams'], inplace = True)
 
 
-# show dataframe
+### show dataframe on different tabs
 st.markdown("## Game Result")
-col1, col2 = st.columns(2)
-col1.metric(label = "Blue team score at round number " + str(len(df_blue)), value = df_blue['score'].loc[len(df_blue)], delta = str(df_blue['score'].loc[len(df_blue)] - df_blue['score'].loc[len(df_blue)-1]) )
-col2.metric(label = "Red team score at round number " + str(len(df_red)), value = df_red['score'].loc[len(df_red)], delta = str(df_red['score'].loc[len(df_red)] - df_red['score'].loc[len(df_red)-1]) )
+tab1, tab2, tab3 = st.tabs(["Dashborad", "Team blue and Team red", "Summary"])
 
-col1, col2 = st.columns(2)
-col1.metric(label = "Blue team health at round number " + str(len(df_blue)), value = df_blue['healthAfter'].loc[len(df_blue)], delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1]))
-col2.metric(label = "Red team health at round number " + str(len(df_red)), value = df_red['healthAfter'].loc[len(df_red)], delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1]))
+# show game result dashboard
+with tab1:
+    col1, col2 = st.columns(2)
+    col1.metric(
+        label = "Blue team score at round number " + str(len(df_blue)), 
+        value = df_blue['score'].loc[len(df_blue)], 
+        delta = str(df_blue['score'].loc[len(df_blue)] - df_blue['score'].loc[len(df_blue)-1]) 
+        )
 
-col1, col2 = st.columns(2)
-col1.markdown("- Blue team:")
-col2.markdown("- Red team:")
-col1, col2 = st.columns(2)
-col1.table(df_blue)
-col2.table(df_red)
+    col2.metric(
+        label = "Red team score at round number " + str(len(df_red)), 
+        value = df_red['score'].loc[len(df_red)], 
+        delta = str(df_red['score'].loc[len(df_red)] - df_red['score'].loc[len(df_red)-1])
+        )
+
+    col1, col2 = st.columns(2)
+    col1.metric(label = "Blue team health at round number " + str(len(df_blue)), 
+    value = df_blue['healthAfter'].loc[len(df_blue)], 
+    delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1])
+    )
+    col2.metric(label = "Red team health at round number " + str(len(df_red)), 
+    value = df_red['healthAfter'].loc[len(df_red)], 
+    delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1])
+    )
+
+    col1, col2 = st.columns(2)
+    col1.markdown("- Blue team:")
+    col2.markdown("- Red team:")
+    col1, col2 = st.columns(2)
+    col1.table(df_blue)
+    col2.table(df_red)
+
+# show line chart
+with tab2:
+    col1, col2 = st.columns(2)
+    c1 = alt.Chart(df).mark_line(point = True).encode(
+        x='roundNumber:O',
+        y='score:Q',
+        color = 'teams:N',
+        column = 'teams:N'
+    )
+    c2 = alt.Chart(df).mark_line(point = True).encode(
+        x='roundNumber:O',
+        y='healthAfter:Q',
+        color = 'teams:N',
+        column = 'teams:N'
+    )
+    col1.altair_chart(c1)
+    col2.altair_chart(c2)
 
 #show bar chart
-st.markdown("## Team blue and Team red")
-
-import altair as alt
-c = alt.Chart(df).mark_bar().encode(
-    x='roundNumber:Q',
-    y='score:Q',
-    color = 'teams:N',
-    #column = 'roundNumber'
-)
-st.altair_chart(c)
-
-col1, col2 = st.columns(2)
-c1 = alt.Chart(df).mark_bar().encode(
-    x='roundNumber:O',
-    y='score:Q',
-    color = 'teams:N',
-    column = 'teams:N'
-)
-c2 = alt.Chart(df).mark_bar().encode(
-    x='roundNumber:O',
-    y='healthAfter:Q',
-    color = 'teams:N',
-    column = 'teams:N'
-)
-
-col1.altair_chart(c1)
-col2.altair_chart(c2)
-
-c = alt.Chart(df).mark_bar().encode(
-    x='teams:N',
-    y='score:Q',
-    color = 'teams:N',
-    column = 'roundNumber:O'
-)
-st.altair_chart(c)
+with tab3:
+    c = alt.Chart(df).mark_bar().encode(
+        x='roundNumber:Q',
+        y='score:Q',
+        color = 'teams:N',
+    )
+    st.altair_chart(c)
+    
+    c = alt.Chart(df).mark_bar().encode(
+        x='teams:N',
+        y='score:Q',
+        color = 'teams:N',
+        column = 'roundNumber:O'
+    )
+    st.altair_chart(c)
