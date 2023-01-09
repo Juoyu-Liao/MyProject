@@ -81,14 +81,14 @@ with tab2:
         column = 'teams:N'
     )
     text = c1.mark_text(
-    align='left',
-    baseline='middle',
-    dx=3  # Nudges text to right so it doesn't appear on top of the bar
+        align='left',
+        baseline='middle',
+        dx=3  # Nudges text to right so it doesn't appear on top of the bar
     ).encode(
-    text='score:Q'
+        text='score:Q'
     )
 
-    # (c1 + text).properties(height=900)
+    (c1 + text).properties(height=900)
 
     st.altair_chart(c1)
     col1, col2 = st.columns(2)
