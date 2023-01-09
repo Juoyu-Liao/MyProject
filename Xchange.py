@@ -33,7 +33,7 @@ df_blue.drop(columns = ['healthBefore', 'teams'], inplace = True)
 
 ### show dataframe on different tabs
 st.markdown("## Game Result")
-tab1, tab2, tab3 = st.tabs(["Dashborad", "Team blue and Team red", "Summary"])
+tab1, tab2, tab3 = st.tabs(["Dashborad", "Team blue and Team red", "Score Summary"])
 
 # show game result dashboard
 with tab1:
@@ -42,22 +42,22 @@ with tab1:
     col2.markdown("- Red team:")
 
     col1.metric(
-        label = "Blue team score at round number " + str(len(df_blue)), 
+        label = "Score at round " + str(len(df_blue)), 
         value = df_blue['score'].loc[len(df_blue)], 
         delta = str(df_blue['score'].loc[len(df_blue)] - df_blue['score'].loc[len(df_blue)-1]) 
         )
 
     col2.metric(
-        label = "Red team score at round number " + str(len(df_red)), 
+        label = "Score at round " + str(len(df_red)), 
         value = df_red['score'].loc[len(df_red)], 
         delta = str(df_red['score'].loc[len(df_red)] - df_red['score'].loc[len(df_red)-1])
         )
 
-    col1.metric(label = "Blue team health at round number " + str(len(df_blue)), 
+    col1.metric(label = "Health at round " + str(len(df_blue)), 
     value = df_blue['healthAfter'].loc[len(df_blue)], 
     delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1])
     )
-    col2.metric(label = "Red team health at round number " + str(len(df_red)), 
+    col2.metric(label = "Health at round " + str(len(df_red)), 
     value = df_red['healthAfter'].loc[len(df_red)], 
     delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1])
     )
