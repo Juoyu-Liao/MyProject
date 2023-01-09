@@ -70,8 +70,6 @@ with tab1:
     )
     st.altair_chart(c2)
 
-
-
 # show line chart
 with tab2:
     c1 = alt.Chart(df).mark_bar().encode(
@@ -86,10 +84,6 @@ with tab2:
     col2.markdown("- Red team:")
     col1.table(df_blue)
     col2.table(df_red)
-
-#    col1, col2 = st.columns(2)
-#    col1.table(df_blue)
-#    col2.table(df_red)
 
 #show bar chart
 with tab3:
