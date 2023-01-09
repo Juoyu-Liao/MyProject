@@ -64,9 +64,15 @@ with tab1:
     delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1])
     )
 
-    col1, col2 = st.columns(2)
-    col1.table(df_blue)
-    col2.table(df_red)
+    c2 = alt.Chart(df).mark_line(point = True).encode(
+        x= alt.X('roundNumber:O'),
+        y='healthAfter:Q',
+        color = 'teams:N',
+        column = 'teams:N'
+    )
+    st.altair_chart(c2)
+
+
 
 # show line chart
 with tab2:
@@ -77,18 +83,18 @@ with tab2:
         color = 'teams:N',
         column = 'teams:N'
     )
-    c2 = alt.Chart(df).mark_line(point = True).encode(
-        x= alt.X('roundNumber:O', title =None),
-        y='healthAfter:Q',
-        color = 'teams:N',
-        column = 'teams:N'
-    )
+
     col1.altair_chart(c1)
-    col2.altair_chart(c2)
+    col2.table(df_blue)
+    col2.table(df_red)
+
+#    col1, col2 = st.columns(2)
+#    col1.table(df_blue)
+#    col2.table(df_red)
 
 #show bar chart
 with tab3:
-    col1, col2 = st.columns(2)
+    #col1, col2 = st.columns(2)
     c3 = alt.Chart(df).mark_bar().encode(
         x='roundNumber:Q',
         y='score:Q',
@@ -100,5 +106,6 @@ with tab3:
         color = 'teams:N',
         column = 'roundNumber:O'
     )
-    col1.altair_chart(c3)
-    col2.altair_chart(c4)
+    #col1.altair_chart(c3)
+    #col2.altair_chart(c4)
+    st.altair_chart(c4)
