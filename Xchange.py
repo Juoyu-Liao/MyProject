@@ -74,26 +74,13 @@ with tab1:
 
 # show line chart
 with tab2:
-    c1 = alt.Chart(df).mark_bar(size =15).encode(
-        x=alt.X(field='roundNumber:O',
-                axis = alt.Axis(title = None)),
-        y= alt.Y('score:Q'),
+    c1 = alt.Chart(df).mark_bar().encode(
+        x='roundNumber:O',
+        y= 'score:Q',
         color = 'teams:N',
         column = 'teams:N'
     )
-    text = c1.mark_text(
-        color = 'teams:N',
-        dx= -5  # Nudges text on top of the bar
-    ).encode(
-        text= alt.Text(
-            'score:Q'
-        )
-    )
-
     st.altair_chart(c1)
-    alt.layer(c1, text, data=df
-             ).facet(column = '#games').configure_view()
-
     col1, col2 = st.columns(2)
     col1.markdown("- Blue team:")
     col2.markdown("- Red team:")
