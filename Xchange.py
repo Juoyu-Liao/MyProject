@@ -89,8 +89,6 @@ with tab2:
         )
     )
 
-    (c1 + text).properties(height=900)
-
     st.altair_chart(c1)
     col1, col2 = st.columns(2)
     col1.markdown("- Blue team:")
