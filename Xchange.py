@@ -6,11 +6,10 @@ import json
 #streamlit
 st.markdown("# Welcome to Xchange")
 
-game_token = st.text_input('Game token', 'insert game token from the URL')
+game_token = st.text_input('Game token', 'c58aa4f6-ce05-4bcb-8837-fd977d2a4930')
 
 # game_token = '3f325168-e2b8-4957-9533-5297fa7b999f'  #game token needed to be chagned 
 
-url = 'https://game-server.geoguessr.com/api/duels/3f325168-e2b8-4957-9533-5297fa7b999f'
 url = 'https://game-server.geoguessr.com/api/duels/' + game_token
 cookies = {
     '_ncfa': "hpGcgybEYZQHthKKNcJau5%2BgG6TcHIqFB5NKojkbOZE%3DpunDNm4VNbjKoylctHMUwN9xgEz41gZheIssGn2A89M%2F%2FI7ZSf27qL8hO07TCyks",
