@@ -74,12 +74,21 @@ with tab1:
 
 # show line chart
 with tab2:
-    c1 = alt.Chart(df).mark_line(point = True).encode(
+    c1 = alt.Chart(df).mark_bar(point = True).encode(
         x=alt.X('roundNumber:O', title= None),
         y='score:Q',
         color = 'teams:N',
         column = 'teams:N'
     )
+    text = c1.mark_text(
+    align='left',
+    baseline='middle',
+    dx=3  # Nudges text to right so it doesn't appear on top of the bar
+    ).encode(
+    text='score:Q'
+    )
+
+    # (c1 + text).properties(height=900)
 
     st.altair_chart(c1)
     col1, col2 = st.columns(2)
