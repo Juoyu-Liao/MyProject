@@ -95,8 +95,10 @@ with tab3:
         y='score:Q',
         color = 'teams:N',
     )
-    c4 = alt.Chart(df).mark_bar(title = None).encode(
-        x='teams:N',
+    c4 = alt.Chart(df).mark_bar().encode(
+        x= alt.X('teams:N',
+                title = None
+                ),
         y='score:Q',
         color = 'teams:N',
         column = 'roundNumber:O'
