@@ -78,7 +78,7 @@ with tab2:
         column = 'teams:N'
     )
     c2 = alt.Chart(df).mark_line(point = True).encode(
-        x='roundNumber:O',
+        x= alt.X('roundNumber:O', title =None),
         y='healthAfter:Q',
         color = 'teams:N',
         column = 'teams:N'
@@ -102,3 +102,10 @@ with tab3:
         column = 'roundNumber:O'
     )
     st.altair_chart(c)
+
+    text = c.mark_text(
+        dx = 3
+    ).encode(
+        text = 'score:Q'
+    )
+    (c + text).properties(height=900)
