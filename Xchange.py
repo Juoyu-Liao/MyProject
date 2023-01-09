@@ -88,24 +88,17 @@ with tab2:
 
 #show bar chart
 with tab3:
-    c = alt.Chart(df).mark_bar().encode(
+    col1, col2 = st.columns(2)
+    c3 = alt.Chart(df).mark_bar().encode(
         x='roundNumber:Q',
         y='score:Q',
         color = 'teams:N',
     )
-    st.altair_chart(c)
-    
-    c = alt.Chart(df).mark_bar().encode(
+    c4 = alt.Chart(df).mark_bar().encode(
         x='teams:N',
         y='score:Q',
         color = 'teams:N',
         column = 'roundNumber:O'
     )
-    st.altair_chart(c)
-
-    text = c.mark_text(
-        dx = 3
-    ).encode(
-        text = 'score:Q'
-    )
-    (c + text).properties(height=900)
+    col1.altair_chart(c3)
+    col2.altair_chart(c4)
