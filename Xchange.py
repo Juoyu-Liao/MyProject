@@ -38,6 +38,10 @@ tab1, tab2, tab3 = st.tabs(["Dashborad", "Team blue and Team red", "Summary"])
 # show game result dashboard
 with tab1:
     col1, col2 = st.columns(2)
+    col1.markdown("- Blue team:")
+    col2.markdown("- Red team:")
+
+    col1, col2 = st.columns(2)
     col1.metric(
         label = "Blue team score at round number " + str(len(df_blue)), 
         value = df_blue['score'].loc[len(df_blue)], 
@@ -61,9 +65,6 @@ with tab1:
     )
 
     col1, col2 = st.columns(2)
-    col1.markdown("- Blue team:")
-    col2.markdown("- Red team:")
-    col1, col2 = st.columns(2)
     col1.table(df_blue)
     col2.table(df_red)
 
@@ -71,7 +72,7 @@ with tab1:
 with tab2:
     col1, col2 = st.columns(2)
     c1 = alt.Chart(df).mark_line(point = True).encode(
-        x='roundNumber:O',
+        x=alt.X('roundNumber:O', title= None),
         y='score:Q',
         color = 'teams:N',
         column = 'teams:N'
