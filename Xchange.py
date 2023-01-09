@@ -91,6 +91,13 @@ with tab2:
     )
 
     st.altair_chart(c1)
+    alt.layer(c1, text, data=data
+                    ).facet(column = '#games'
+        ).configure_view(
+        continuousHeight=200,
+        continuousWidth= 0.5
+    )
+
     col1, col2 = st.columns(2)
     col1.markdown("- Blue team:")
     col2.markdown("- Red team:")
