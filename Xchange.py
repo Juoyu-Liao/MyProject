@@ -77,7 +77,7 @@ with tab2:
     c1 = alt.Chart(df).mark_bar(size =15).encode(
         x=alt.X(field='roundNumber:O',
                 axis = alt.Axis(title = None)),
-        y= alt.Y('score:Q')
+        y= alt.Y('score:Q'),
         color = 'teams:N',
         column = 'teams:N'
     )
