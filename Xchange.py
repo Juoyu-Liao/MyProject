@@ -7,7 +7,6 @@ import altair as alt
 st.markdown("# Welcome to Xchange 2023")
 st.markdown("### Insight and Data in Stavanger")
 
-
 ### insert game token and get data
 game_token = st.text_input('Game token', '817f5ea9-9651-4190-be01-a8d7e852af61')
 url = 'https://game-server.geoguessr.com/api/duels/' + game_token
@@ -20,8 +19,11 @@ data = json.loads(r.text)
 
 ### Normalizing data
 df = pd.json_normalize(data, record_path =['teams','roundResults'], meta = [['teams','name']])
-df.drop(columns = ['bestGuess.roundNumber', 'bestGuess.lat', 'bestGuess.lng', 'bestGuess.distance', 'bestGuess.created', 'bestGuess.isTeamsBestGuessOnRound'], inplace = True)
+df.drop(columns = ['bestGuess.roundNumber', 'bestGuess.lat', 'bestGuess.lng', 'bestGuess.distance', 'bestGuess.created', 'bestGuess.isTeamsBestGuessOnRound'], 
+        inplace = True
+        )
 df.rename(columns = {"teams.name": "teams"}, inplace= True)
+
 ### split dataframe into 2 teams
 df_red = df.loc[df['teams'] == 'red']
 df_red.set_index(['roundNumber'], inplace = True)
@@ -54,12 +56,12 @@ with tab1:
         )
 
     col1.metric(label = "Health at round " + str(len(df_blue)), 
-    value = df_blue['healthAfter'].loc[len(df_blue)], 
-    delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1])
+                value = df_blue['healthAfter'].loc[len(df_blue)], 
+                delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1])
     )
     col2.metric(label = "Health at round " + str(len(df_red)), 
-    value = df_red['healthAfter'].loc[len(df_red)], 
-    delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1])
+                value = df_red['healthAfter'].loc[len(df_red)], 
+                delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1])
     )
 
     c2 = alt.Chart(df).mark_line(point = True).encode(
