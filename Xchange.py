@@ -9,7 +9,7 @@ st.markdown("### Insight and Data in Stavanger")
 
 
 ### insert game token and get data
-game_token = st.text_input('Game token', 'c58aa4f6-ce05-4bcb-8837-fd977d2a4930')
+game_token = st.text_input('Game token', '817f5ea9-9651-4190-be01-a8d7e852af61')
 url = 'https://game-server.geoguessr.com/api/duels/' + game_token
 cookies = {
     '_ncfa': "hpGcgybEYZQHthKKNcJau5%2BgG6TcHIqFB5NKojkbOZE%3DpunDNm4VNbjKoylctHMUwN9xgEz41gZheIssGn2A89M%2F%2FI7ZSf27qL8hO07TCyks",
@@ -41,7 +41,6 @@ with tab1:
     col1.markdown("- Blue team:")
     col2.markdown("- Red team:")
 
-    col1, col2 = st.columns(2)
     col1.metric(
         label = "Blue team score at round number " + str(len(df_blue)), 
         value = df_blue['score'].loc[len(df_blue)], 
@@ -54,7 +53,6 @@ with tab1:
         delta = str(df_red['score'].loc[len(df_red)] - df_red['score'].loc[len(df_red)-1])
         )
 
-    col1, col2 = st.columns(2)
     col1.metric(label = "Blue team health at round number " + str(len(df_blue)), 
     value = df_blue['healthAfter'].loc[len(df_blue)], 
     delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1])
@@ -76,7 +74,6 @@ with tab1:
 
 # show line chart
 with tab2:
-    col1, col2 = st.columns(2)
     c1 = alt.Chart(df).mark_line(point = True).encode(
         x=alt.X('roundNumber:O', title= None),
         y='score:Q',
@@ -84,8 +81,11 @@ with tab2:
         column = 'teams:N'
     )
 
-    col1.altair_chart(c1)
-    col2.table(df_blue)
+    st.altair_chart(c1)
+    col1, col2 = st.columns(2)
+    col1.markdown("- Blue team:")
+    col2.markdown("- Red team:")
+    col1.table(df_blue)
     col2.table(df_red)
 
 #    col1, col2 = st.columns(2)
