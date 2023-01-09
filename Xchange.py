@@ -3,8 +3,9 @@ import requests
 import pandas as pd
 import json
 
+game_token = st.text_input('Game token', 'insert game token from the URL')
 
-game_token = '3f325168-e2b8-4957-9533-5297fa7b999f'  #game token needed to be chagned 
+# game_token = '3f325168-e2b8-4957-9533-5297fa7b999f'  #game token needed to be chagned 
 
 url = 'https://game-server.geoguessr.com/api/duels/' + game_token
 cookies = {
