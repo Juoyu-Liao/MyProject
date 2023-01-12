@@ -27,12 +27,6 @@ df.rename(columns = {"teams.name": "Teams", "roundNumber": "Rounds", "score": "S
 ### split dataframe into 2 teams
 df_red = df.loc[df['Teams'] == 'red'].loc[:, ('Score','Health')]
 df_blue = df.loc[df['Teams'] == 'blue'].loc[:, ('Score','Health')]
-# df_red = df.loc[df['Teams'] == 'red']
-# df_red.set_index(['Rounds'], inplace = True)
-# df_red.drop(columns = ['healthBefore', 'Teams'], inplace = True)
-# df_blue = df.loc[df['Teams'] == 'blue']
-# df_blue.set_index(['Rounds'], inplace = True)
-# df_blue.drop(columns = ['healthBefore', 'Teams'], inplace = True)
 
 ### show dataframe on different tabs
 st.markdown("## Game Result")
@@ -43,7 +37,7 @@ with tab1:
     c2 = alt.Chart(df).mark_line(point = True).encode(
     x= alt.X('Rounds:O'),
     y='Health:Q',
-    color = 'Teams:N',
+    color = alt.value("#FFAA00"), #'Teams:N',
     column = 'Teams:N'
     )
     st.altair_chart(c2)
