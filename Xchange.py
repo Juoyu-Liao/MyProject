@@ -37,10 +37,7 @@ with tab1:
     c2 = alt.Chart(df).mark_line(point = True).encode(
     x= alt.X('Rounds:O'),
     y='Health:Q',
-    #color = alt.Color('Teams', scale=alt.Scale(scheme='tableau10')), #'Teams:N',
-    color = alt.Color("field": "Teams",
-                        "type": "nominal",
-                        "scale": ("domain": ["gold", "silver"], "range": ["#F1C40F", "#95A5A6"]),
+    color = alt.Color('Teams', scale=alt.Scale(range=['coral', 'steelblue'])), #'Teams:N',
     column = 'Teams:N'
     )
     st.altair_chart(c2)
