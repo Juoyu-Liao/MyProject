@@ -37,7 +37,7 @@ with tab1:
     c2 = alt.Chart(df).mark_line(point = True).encode(
     x= alt.X('Rounds:O'),
     y='Health:Q',
-    color = alt.Color('Teams', scale=alt.Scale(range=[' #6667AB', '#CC2936'])), #'Teams:N',
+    color = alt.Color('Teams', scale=alt.Scale(range=['#22577A', '#CC2936'])),
     column = 'Teams:N'
     )
     st.altair_chart(c2)
@@ -90,14 +90,14 @@ with tab3:
     c3 = alt.Chart(df).mark_bar().encode(
         x='Rounds:Q',
         y='Score:Q',
-        color = 'Teams:N',
+        color = alt.Color('Teams:N', scale=alt.Scale(range=['#22577A', '#CC2936'])),
     )
     c4 = alt.Chart(df).mark_bar().encode(
         x= alt.X('Teams:N',
                 title = None
                 ),
         y='Score:Q',
-        color = 'Teams:N',
+        color = alt.Color('Teams:N', scale=alt.Scale(range=['#22577A', '#CC2936'])),
         column = 'Rounds:O'
     )
     #col1.altair_chart(c3)
