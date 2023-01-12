@@ -26,9 +26,9 @@ df.rename(columns = {"teams.name": "Teams", "roundNumber": "Rounds", "score": "S
 ### split dataframe into 2 teams
 df_red = df.loc[df['Teams'] == 'red'].loc[:, ('Score','Health')]
 df_blue = df.loc[df['Teams'] == 'blue'].loc[:, ('Score','Health')]
-#index_list = np.arange(1,len(df_blue)+1)
-#df_red.index = index_list
-#df_blue.index = index_list
+index_list = np.arange(1,len(df_blue)+1)
+df_red.index = index_list
+df_blue.index = index_list
 
 ### show dataframe on different tabs
 st.markdown("## Game Result")
