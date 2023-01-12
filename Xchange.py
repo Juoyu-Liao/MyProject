@@ -27,10 +27,10 @@ df.rename(columns = {"teams.name": "Teams", "roundNumber": "Rounds", "score": "S
 ### split dataframe into 2 teams
 df_red = df.loc[df['Teams'] == 'red']
 df_red.set_index(['Rounds'], inplace = True)
-df_red.drop(columns = ['Health', 'Teams'], inplace = True)
+df_red.drop(columns = ['healthBefore', 'Teams'], inplace = True)
 df_blue = df.loc[df['Teams'] == 'blue']
 df_blue.set_index(['Rounds'], inplace = True)
-df_blue.drop(columns = ['Health', 'Teams'], inplace = True)
+df_blue.drop(columns = ['healthBefore', 'Teams'], inplace = True)
 
 
 ### show dataframe on different tabs
