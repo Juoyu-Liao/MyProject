@@ -5,7 +5,7 @@ import pandas as pd
 import altair as alt
 
 st.markdown("# Welcome to Xchange 2023")
-st.markdown("### Insight and Data in Stavanger")
+st.markdown("### Insights and Data in Stavanger")
 
 ### insert game token and get data
 game_token = st.text_input('Game token', '817f5ea9-9651-4190-be01-a8d7e852af61')
