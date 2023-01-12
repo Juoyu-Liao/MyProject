@@ -19,9 +19,7 @@ data = json.loads(r.text)
 
 ### Normalizing data
 df = pd.json_normalize(data, record_path =['teams','roundResults'], meta = [['teams','name']])
-df.drop(columns = ['bestGuess.roundNumber', 'bestGuess.lat', 'bestGuess.lng', 'bestGuess.distance', 'bestGuess.created', 'bestGuess.isTeamsBestGuessOnRound'], 
-        inplace = True
-        )
+df = df.loc[:, ('teams.name','roundNumber', 'score', 'healthAfter')]
 df.rename(columns = {"teams.name": "Teams", "roundNumber": "Rounds", "score": "Score", "healthAfter": "Health"}, inplace= True)
 
 ### split dataframe into 2 teams
