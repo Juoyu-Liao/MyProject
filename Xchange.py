@@ -25,14 +25,14 @@ df.drop(columns = ['bestGuess.roundNumber', 'bestGuess.lat', 'bestGuess.lng', 'b
 df.rename(columns = {"teams.name": "Teams", "roundNumber": "Rounds", "score": "Score", "healthAfter": "Health"}, inplace= True)
 
 ### split dataframe into 2 teams
-#df_red = df.loc[df['Teams'] == 'red'].loc[:, ('Score','Health')]
-#df_blue = df.loc[df['Teams'] == 'blue'].loc[:, ('Score','Health')]
-df_red = df.loc[df['Teams'] == 'red']
-df_red.set_index(['Rounds'], inplace = True)
-df_red.drop(columns = ['healthBefore', 'Teams'], inplace = True)
-df_blue = df.loc[df['Teams'] == 'blue']
-df_blue.set_index(['Rounds'], inplace = True)
-df_blue.drop(columns = ['healthBefore', 'Teams'], inplace = True)
+df_red = df.loc[df['Teams'] == 'red'].loc[:, ('Score','Health')]
+df_blue = df.loc[df['Teams'] == 'blue'].loc[:, ('Score','Health')]
+# df_red = df.loc[df['Teams'] == 'red']
+# df_red.set_index(['Rounds'], inplace = True)
+# df_red.drop(columns = ['healthBefore', 'Teams'], inplace = True)
+# df_blue = df.loc[df['Teams'] == 'blue']
+# df_blue.set_index(['Rounds'], inplace = True)
+# df_blue.drop(columns = ['healthBefore', 'Teams'], inplace = True)
 
 ### show dataframe on different tabs
 st.markdown("## Game Result")
@@ -55,7 +55,7 @@ with tab1:
     col1.metric(
         label = "Score at round " + str(len(df_blue)), 
         value = df_blue['Score'].loc[len(df_blue)], 
-        delta = str(df_blue['Score'].loc[len(df_blue)] - df_blue['Score'].loc[len(df_blue)-1]) 
+        delta = str(df_blue['Score'].loc[len(df_blue)] - df_blue['Score'].loc[len(df_blue)*2-1]) 
         )
 
     col2.metric(
@@ -67,7 +67,7 @@ with tab1:
     col1.metric(
         label = "Health at round " + str(len(df_blue)), 
         value = df_blue['Health'].loc[len(df_blue)], 
-        delta = str(df_blue['Health'].loc[len(df_blue)] - df_blue['Health'].loc[len(df_blue)-1])
+        delta = str(df_blue['Health'].loc[len(df_blue)] - df_blue['Health'].loc[len(df_blue)*2-1])
     )
     col2.metric(
         label = "Health at round " + str(len(df_red)), 
