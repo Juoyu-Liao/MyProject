@@ -74,7 +74,7 @@ with tab2:
     c1 = alt.Chart(df).mark_bar().encode(
         x='Rounds:O',
         y= 'Score:Q',
-        color = 'Teams:N',
+        color = alt.Color('Teams:N', scale=alt.Scale(range=['#22577A', '#CC2936'])),
         column = 'Teams:N'
     )
     st.altair_chart(c1)
