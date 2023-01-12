@@ -22,15 +22,15 @@ df = pd.json_normalize(data, record_path =['teams','roundResults'], meta = [['te
 df.drop(columns = ['bestGuess.roundNumber', 'bestGuess.lat', 'bestGuess.lng', 'bestGuess.distance', 'bestGuess.created', 'bestGuess.isTeamsBestGuessOnRound'], 
         inplace = True
         )
-df.rename(columns = {"teams.name": "teams"}, inplace= True)
+df.rename(columns = {"teams.name": "Teams", "roundNumber": "Rounds", "score": "Score", "healthAfter": "Health"}, inplace= True)
 
 ### split dataframe into 2 teams
-df_red = df.loc[df['teams'] == 'red']
-df_red.set_index(['roundNumber'], inplace = True)
-df_red.drop(columns = ['healthBefore', 'teams'], inplace = True)
-df_blue = df.loc[df['teams'] == 'blue']
-df_blue.set_index(['roundNumber'], inplace = True)
-df_blue.drop(columns = ['healthBefore', 'teams'], inplace = True)
+df_red = df.loc[df['Teams'] == 'red']
+df_red.set_index(['Rounds'], inplace = True)
+df_red.drop(columns = ['Health', 'teams'], inplace = True)
+df_blue = df.loc[df['Teams'] == 'blue']
+df_blue.set_index(['Rounds'], inplace = True)
+df_blue.drop(columns = ['Health', 'teams'], inplace = True)
 
 
 ### show dataframe on different tabs
@@ -40,10 +40,10 @@ tab1, tab2, tab3 = st.tabs(["Dashboard", "Team blue and Team red", "Score Summar
 # show game result dashboard
 with tab1:
     c2 = alt.Chart(df).mark_line(point = True).encode(
-    x= alt.X('roundNumber:O'),
+    x= alt.X('Rounds:O'),
     y='healthAfter:Q',
-    color = 'teams:N',
-    column = 'teams:N'
+    color = 'Teams:N',
+    column = 'Teams:N'
     )
     st.altair_chart(c2)
 
@@ -53,32 +53,32 @@ with tab1:
 
     col1.metric(
         label = "Score at round " + str(len(df_blue)), 
-        value = df_blue['score'].loc[len(df_blue)], 
-        delta = str(df_blue['score'].loc[len(df_blue)] - df_blue['score'].loc[len(df_blue)-1]) 
+        value = df_blue['Score'].loc[len(df_blue)], 
+        delta = str(df_blue['Score'].loc[len(df_blue)] - df_blue['Score'].loc[len(df_blue)-1]) 
         )
 
     col2.metric(
         label = "Score at round " + str(len(df_red)), 
-        value = df_red['score'].loc[len(df_red)], 
-        delta = str(df_red['score'].loc[len(df_red)] - df_red['score'].loc[len(df_red)-1])
+        value = df_red['Score'].loc[len(df_red)], 
+        delta = str(df_red['Score'].loc[len(df_red)] - df_red['Score'].loc[len(df_red)-1])
         )
 
     col1.metric(label = "Health at round " + str(len(df_blue)), 
-                value = df_blue['healthAfter'].loc[len(df_blue)], 
-                delta = str(df_blue['healthAfter'].loc[len(df_blue)] - df_blue['healthAfter'].loc[len(df_blue)-1])
+                value = df_blue['Health'].loc[len(df_blue)], 
+                delta = str(df_blue['Health'].loc[len(df_blue)] - df_blue['Health'].loc[len(df_blue)-1])
     )
     col2.metric(label = "Health at round " + str(len(df_red)), 
-                value = df_red['healthAfter'].loc[len(df_red)], 
-                delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1])
+                value = df_red['Health'].loc[len(df_red)], 
+                delta = str(df_red['Health'].loc[len(df_red)] - df_red['Health'].loc[len(df_red)-1])
     )
 
 # show line chart
 with tab2:
     c1 = alt.Chart(df).mark_bar().encode(
-        x='roundNumber:O',
-        y= 'score:Q',
-        color = 'teams:N',
-        column = 'teams:N'
+        x='Rounds:O',
+        y= 'Score:Q',
+        color = 'Teams:N',
+        column = 'Teams:N'
     )
     st.altair_chart(c1)
     col1, col2 = st.columns(2)
@@ -91,17 +91,17 @@ with tab2:
 with tab3:
     #col1, col2 = st.columns(2)
     c3 = alt.Chart(df).mark_bar().encode(
-        x='roundNumber:Q',
-        y='score:Q',
-        color = 'teams:N',
+        x='Rounds:Q',
+        y='Score:Q',
+        color = 'Teams:N',
     )
     c4 = alt.Chart(df).mark_bar().encode(
-        x= alt.X('teams:N',
+        x= alt.X('Teams:N',
                 title = None
                 ),
-        y='score:Q',
-        color = 'teams:N',
-        column = 'roundNumber:O'
+        y='Score:Q',
+        color = 'Teams:N',
+        column = 'Rounds:O'
     )
     #col1.altair_chart(c3)
     #col2.altair_chart(c4)
