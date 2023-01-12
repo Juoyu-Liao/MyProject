@@ -64,16 +64,16 @@ with tab1:
         delta = str(df_red['Score'].loc[len(df_red)] - df_red['Score'].loc[len(df_red)-1])
         )
 
-    col1.metric(
-        label = "Health at round " + str(len(df_blue)), 
-        value = df_blue['Health'].loc[len(df_blue)], 
-        delta = str(df_blue['Health'].loc[len(df_blue)] - df_blue['Health'].loc[len(df_blue)-1])
-    )
-    col2.metric(
-        label = "Health at round " + str(len(df_red)), 
-        value = df_red['Health'].loc[len(df_red)], 
-        delta = str(df_red['Health'].loc[len(df_red)] - df_red['Health'].loc[len(df_red)-1])
-    )
+    # col1.metric(
+    #     label = "Health at round " + str(len(df_blue)), 
+    #     value = df_blue['Health'].loc[len(df_blue)], 
+    #     delta = str(df_blue['Health'].loc[len(df_blue)] - df_blue['Health'].loc[len(df_blue)-1])
+    # )
+    # col2.metric(
+    #     label = "Health at round " + str(len(df_red)), 
+    #     value = df_red['Health'].loc[len(df_red)], 
+    #     delta = str(df_red['Health'].loc[len(df_red)] - df_red['Health'].loc[len(df_red)-1])
+    # )
 
 # show line chart
 with tab2:
