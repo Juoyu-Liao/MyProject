@@ -55,7 +55,7 @@ with tab1:
     col1.metric(
         label = "Score at round " + str(len(df_blue)), 
         value = df_blue['Score'].iloc[-1], 
-        delta = str(df_blue['Score'].iloc[-1] - df_blue['Score'].liloc[-2]) 
+        delta = str(df_blue['Score'].iloc[-1] - df_blue['Score'].iloc[-2]) 
         )
 
     col2.metric(
