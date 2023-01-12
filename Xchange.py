@@ -54,25 +54,25 @@ with tab1:
 
     col1.metric(
         label = "Score at round " + str(len(df_blue)), 
-        value = df_blue['Score'].loc[len(df_blue)], 
-        delta = str(df_blue['Score'].loc[len(df_blue)] - df_blue['Score'].loc[len(df_blue)*2-1]) 
+        value = df_blue['Score'].iloc[-1], 
+        delta = str(df_blue['Score'].iloc[-1] - df_blue['Score'].liloc[-2]) 
         )
 
     col2.metric(
         label = "Score at round " + str(len(df_red)), 
-        value = df_red['Score'].loc[len(df_red)], 
-        delta = str(df_red['Score'].loc[len(df_red)] - df_red['Score'].loc[len(df_red)-1])
+        value = df_red['Score'].iloc[-1], 
+        delta = str(df_red['Score'].iloc[-1] - df_red['Score'].iloc[-2])
         )
 
     col1.metric(
         label = "Health at round " + str(len(df_blue)), 
-        value = df_blue['Health'].loc[len(df_blue)], 
-        delta = str(df_blue['Health'].loc[len(df_blue)] - df_blue['Health'].loc[len(df_blue)*2-1])
+        value = df_blue['Health'].iloc[-1], 
+        delta = str(df_blue['Health'].iloc[-1] - df_blue['Health'].iloc[-2])
     )
     col2.metric(
         label = "Health at round " + str(len(df_red)), 
-        value = df_red['Health'].loc[len(df_red)], 
-        delta = str(df_red['Health'].loc[len(df_red)] - df_red['Health'].loc[len(df_red)-1])
+        value = df_red['Health'].iloc[-1], 
+        delta = str(df_red['Health'].iloc[-1] - df_red['Health'].iloc[-2])
     )
 
 # show line chart
