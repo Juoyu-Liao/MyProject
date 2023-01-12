@@ -25,10 +25,14 @@ df.drop(columns = ['bestGuess.roundNumber', 'bestGuess.lat', 'bestGuess.lng', 'b
 df.rename(columns = {"teams.name": "Teams", "roundNumber": "Rounds", "score": "Score", "healthAfter": "Health"}, inplace= True)
 
 ### split dataframe into 2 teams
-df_red = df.loc[df['Teams'] == 'red'].loc[:, ('Score','Health')]
-df_blue = df.loc[df['Teams'] == 'blue'].loc[:, ('Score','Health')]
-
-
+#df_red = df.loc[df['Teams'] == 'red'].loc[:, ('Score','Health')]
+#df_blue = df.loc[df['Teams'] == 'blue'].loc[:, ('Score','Health')]
+df_red = df.loc[df['Teams'] == 'red']
+df_red.set_index(['Rounds'], inplace = True)
+df_red.drop(columns = ['healthBefore', 'Teams'], inplace = True)
+df_blue = df.loc[df['Teams'] == 'blue']
+df_blue.set_index(['Rounds'], inplace = True)
+df_blue.drop(columns = ['healthBefore', 'Teams'], inplace = True)
 
 ### show dataframe on different tabs
 st.markdown("## Game Result")
