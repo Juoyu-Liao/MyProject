@@ -35,10 +35,18 @@ df_blue.drop(columns = ['healthBefore', 'teams'], inplace = True)
 
 ### show dataframe on different tabs
 st.markdown("## Game Result")
-tab1, tab2, tab3 = st.tabs(["Dashborad", "Team blue and Team red", "Score Summary"])
+tab1, tab2, tab3 = st.tabs(["Dashboard", "Team blue and Team red", "Score Summary"])
 
 # show game result dashboard
 with tab1:
+    c2 = alt.Chart(df).mark_line(point = True).encode(
+    x= alt.X('roundNumber:O'),
+    y='healthAfter:Q',
+    color = 'teams:N',
+    column = 'teams:N'
+    )
+    st.altair_chart(c2)
+
     col1, col2 = st.columns(2)
     col1.markdown("- Blue team:")
     col2.markdown("- Red team:")
@@ -63,14 +71,6 @@ with tab1:
                 value = df_red['healthAfter'].loc[len(df_red)], 
                 delta = str(df_red['healthAfter'].loc[len(df_red)] - df_red['healthAfter'].loc[len(df_red)-1])
     )
-
-    c2 = alt.Chart(df).mark_line(point = True).encode(
-        x= alt.X('roundNumber:O'),
-        y='healthAfter:Q',
-        color = 'teams:N',
-        column = 'teams:N'
-    )
-    st.altair_chart(c2)
 
 # show line chart
 with tab2:
