@@ -9,7 +9,7 @@ st.markdown("# Welcome to Xchange 2023")
 st.markdown("### Insights and Data in Stavanger")
 
 ### insert game token and get data
-game_token = st.text_input('Game token', 'ffbe43a5-75b9-4478-a8fa-2c052ba879c2')
+game_token = st.text_input('Game token', 'a098653c-7946-4b94-82ac-76cf5f1c82f6')
 url = 'https://game-server.geoguessr.com/api/duels/' + game_token
 cookies = {
     '_ncfa': "hpGcgybEYZQHthKKNcJau5%2BgG6TcHIqFB5NKojkbOZE%3DpunDNm4VNbjKoylctHMUwN9xgEz41gZheIssGn2A89M%2F%2FI7ZSf27qL8hO07TCyks",
